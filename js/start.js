@@ -7,7 +7,7 @@
 
  var vw=window.innerWidth;
  var vh=window.innerHeight;
- 
+ var spacefon;
 var game = new Phaser.Game(vw, vh, Phaser.CANVAS);
 
 var PhaserGame = function() {
@@ -27,6 +27,7 @@ PhaserGame.prototype = {
         this.load.image('ship', 'assets/yo.png');
         this.load.image('laser', 'assets/laser.png');
     },
+   
     
     create: function() {
     
@@ -38,7 +39,11 @@ PhaserGame.prototype = {
         
         this.physics.startSystem(Phaser.Physics.ARCADE);
         
-        this.add.tileSprite(0, 0, game.width, game.height, 'space');
+        //this.add.tileSprite(0, 0, game.width, game.height, 'space');
+        
+
+      spacefon=this.add.sprite(0,0, 'space');
+
         
         this.lasers = game.add.group();
         this.lasers.enableBody = true;
@@ -55,6 +60,7 @@ PhaserGame.prototype = {
         this.player = this.add.sprite(250, 250, 'ship');
         this.player.scale.setTo(0.1, 0.1);
         this.player.anchor.set(0.5);
+        spacefon.anchor.set(0.5);
         
         game.physics.arcade.enable(this.player);
         this.player.body.drag.set(100);
@@ -82,6 +88,8 @@ PhaserGame.prototype = {
     },
     
     update: function() {
+
+        spacefon.angle=spacefon.angle+1;
         this.updateDebugText();
         
         // Read joystick data to set ship's angle and acceleration
